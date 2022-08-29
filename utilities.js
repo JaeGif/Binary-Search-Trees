@@ -17,10 +17,21 @@ function binarySearch(arr, val) {
   }
   return -1;
 }
-function removeDuplicateNodes(nodeArr) {
-  let nodeSet = [...new Set(nodeArr)];
-
-  return nodeSet;
+function sortNodes(nodeArr) {
+  // change sort function args depending on the array type
+  if (typeof nodeArr[0] === 'string') {
+    let nodeSet = [...new Set(nodeArr)];
+    let sortedNodes = nodeSet.sort();
+    return sortedNodes;
+  }
+  if (typeof nodeArr[0] === 'number') {
+    let nodeSet = [...new Set(nodeArr)];
+    // sort only works on strings with no args passed. Passing the comparison function to sort numbers
+    let sortedNodes = nodeSet.sort(function (a, b) {
+      return a - b;
+    });
+    return sortedNodes;
+  }
 }
 const prettyPrint = (node, prefix = '', isLeft = true) => {
   // visualize the binary tree
@@ -33,4 +44,4 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
   }
 };
 
-export { removeDuplicateNodes, prettyPrint };
+export { sortNodes, prettyPrint };
