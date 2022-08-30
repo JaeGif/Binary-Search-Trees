@@ -12,11 +12,41 @@ class Tree {
   constructor(root = null) {
     this.root = root;
   }
-  buildTree(nodeArr) {
-    let start = 0;
-    let end = nodeArr.length - 1;
-    let mid = Math.floor((start + end) / 2); // in case the input array had no defined midpoint
-    console.log(mid);
+  buildTree(dataArr) {
+    const start = 0;
+    const end = dataArr.length - 1;
+    const mid = Math.floor((start + end) / 2);
+
+    this.root = new Node(dataArr[mid]);
+    return this.root;
+  }
+  insert(data) {
+    const node = this.root;
+    if (node === null) {
+      this.root = new Node(data);
+      return;
+    } else {
+      const searchTree = function (node) {
+        if (data < node.data) {
+          if (node.left === null) {
+            node.left = new Node(data);
+            return;
+          } else if (node.left !== null) {
+            return searchTree(node.left);
+          }
+        } else if (data > node.data) {
+          if (node.right === null) {
+            node.right = new Node(data);
+            return;
+          } else if (node.right !== null) {
+            return searchTree(node.right);
+          }
+        } else {
+          return null;
+        }
+      };
+      return searchTree(node);
+    }
   }
 }
 
@@ -30,4 +60,5 @@ class Tree {
 let inputNodes = sortNodes([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 let treeInstance = new Tree();
 treeInstance.buildTree(inputNodes);
-console.log(inputNodes);
+
+prettyPrint(treeInstance.root);

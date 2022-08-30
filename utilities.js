@@ -18,7 +18,7 @@ function binarySearch(arr, val) {
   return -1;
 }
 function sortNodes(nodeArr) {
-  // change sort function args depending on the array type
+  // removes duplicate elements of an input array and returns a sorted array
   if (typeof nodeArr[0] === 'string') {
     let nodeSet = [...new Set(nodeArr)];
     let sortedNodes = nodeSet.sort();
