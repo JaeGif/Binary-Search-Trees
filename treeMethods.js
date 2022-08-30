@@ -57,24 +57,24 @@ class Tree {
     } else if (root.data > key) {
       root.left = this.remove(root.left, key);
     } else if (root.left) {
-      root.data = this.predecessor(root);
+      root.data = this.#predecessor(root);
       root.left = this.remove(root.left, root.data);
     } else if (root.right) {
-      root.data = this.successor(root);
+      root.data = this.#successor(root);
       root.right = this.remove(root.right, root.data);
     } else {
       root = null;
     }
     return root;
   }
-  successor(node) {
+  #successor(node) {
     node = node.right;
     while (node.left) {
       node = node.left;
     }
     return node.data;
   }
-  predecessor(node) {
+  #predecessor(node) {
     node = node.left;
     while (node.right) {
       node = node.right;
