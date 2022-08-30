@@ -9,16 +9,16 @@ class Node {
 }
 
 class Tree {
-  constructor(root = null) {
-    this.root = root;
+  constructor(dataArr) {
+    this.root = this.buildTree(dataArr);
   }
   buildTree(dataArr) {
-    const start = 0;
-    const end = dataArr.length - 1;
-    const mid = Math.floor((start + end) / 2);
-
-    this.root = new Node(dataArr[mid]);
-    return this.root;
+    if (dataArr.length === 0) return null;
+    const mid = parseInt(dataArr.length / 2);
+    const root = new Node(dataArr[mid]);
+    root.left = this.buildTree(dataArr.slice(0, mid));
+    root.right = this.buildTree(dataArr.slice(mid + 1));
+    return root;
   }
   insert(data) {
     const node = this.root;
@@ -57,8 +57,7 @@ class Tree {
 5: Calculate mid of left subarray and make it root of left subtree of A.
 6: Calculate mid of right subarray and make it root of right subtree of A. */
 
-let inputNodes = sortNodes([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
-let treeInstance = new Tree();
-treeInstance.buildTree(inputNodes);
+let inputNodes = sortNodes([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 324]);
+let treeInstance = new Tree(inputNodes);
 
 prettyPrint(treeInstance.root);
