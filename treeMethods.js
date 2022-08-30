@@ -50,19 +50,25 @@ class Tree {
   }
   remove(root, key) {
     if (root === null) {
+      // case: tree undefined
       return root;
     }
     if (root.data < key) {
+      // traverse to the target node in right direction
       root.right = this.remove(root.right, key);
     } else if (root.data > key) {
+      // traverse to the target node in the left direction
       root.left = this.remove(root.left, key);
     } else if (root.left) {
+      // case: target node has a leftward child
       root.data = this.#predecessor(root);
       root.left = this.remove(root.left, root.data);
     } else if (root.right) {
+      // case: target node has a rightward child
       root.data = this.#successor(root);
       root.right = this.remove(root.right, root.data);
     } else {
+      // case: target node is a leaf
       root = null;
     }
     return root;
@@ -94,5 +100,5 @@ let inputNodes = sortNodes([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 324]);
 let treeInstance = new Tree(inputNodes);
 prettyPrint(treeInstance.root);
 
-treeInstance.remove(treeInstance.root, 23);
+treeInstance.remove(treeInstance.root, 2);
 prettyPrint(treeInstance.root);
