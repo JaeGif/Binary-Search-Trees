@@ -48,6 +48,39 @@ class Tree {
       return searchTree(node);
     }
   }
+  remove(root, key) {
+    if (root === null) {
+      return root;
+    }
+    if (root.data < key) {
+      root.right = this.remove(root.right, key);
+    } else if (root.data > key) {
+      root.left = this.remove(root.left, key);
+    } else if (root.left) {
+      root.data = this.predecessor(root);
+      root.left = this.remove(root.left, root.data);
+    } else if (root.right) {
+      root.data = this.successor(root);
+      root.right = this.remove(root.right, root.data);
+    } else {
+      root = null;
+    }
+    return root;
+  }
+  successor(node) {
+    node = node.right;
+    while (node.left) {
+      node = node.left;
+    }
+    return node.data;
+  }
+  predecessor(node) {
+    node = node.left;
+    while (node.right) {
+      node = node.right;
+    }
+    return node.data;
+  }
 }
 
 /* 1: Initialize start = 0, end = length of the array – 1
@@ -59,5 +92,7 @@ class Tree {
 
 let inputNodes = sortNodes([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 324]);
 let treeInstance = new Tree(inputNodes);
+prettyPrint(treeInstance.root);
 
+treeInstance.remove(treeInstance.root, 23);
 prettyPrint(treeInstance.root);
