@@ -9,6 +9,10 @@ class Node {
 }
 
 class Tree {
+  inorderArr = [];
+  preorderArr = [];
+  postorderArr = [];
+
   constructor(dataArr) {
     this.root = this.buildTree(dataArr);
   }
@@ -145,9 +149,17 @@ class Tree {
       this.postorderArr.push(root.data);
     }
   }
-  inorderArr = [];
-  preorderArr = [];
-  postorderArr = [];
+  height(root = this.root) {
+    // height of a binary tree is NOT the number of nodes in a depth but rather the number of BRANCHES to the bottom.
+    // the number of branches is equal to the number of nodes -1. Therefore the base case needs to subtract 1 from the final count
+    // of nodes. Hence return -1 rather than return null.
+    if (root === null) {
+      return -1;
+    }
+    let left = this.height(root.left);
+    let right = this.height(root.right);
+    return Math.max(left, right) + 1;
+  }
 
   #successor(node) {
     node = node.right;
@@ -168,4 +180,5 @@ class Tree {
 let inputNodes = sortNodes([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 324]);
 let treeInstance = new Tree(inputNodes);
 prettyPrint(treeInstance.root);
-console.log(treeInstance.inorderArr);
+
+console.log(treeInstance.height());
