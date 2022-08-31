@@ -73,6 +73,21 @@ class Tree {
     }
     return root;
   }
+  find(data, root = this.root) {
+    if (root === null) return null;
+
+    if (root.data === data) return root;
+
+    if (root.data > data) {
+      // if the current node is bigger, go left as left children are smaller
+      return this.find(data, root.left);
+    } else if (root.data < data) {
+      // if the current node is smaller go right as the right children are bigger
+      return this.find(data, root.right);
+    }
+    return root;
+  }
+
   #successor(node) {
     node = node.right;
     while (node.left) {
@@ -89,16 +104,8 @@ class Tree {
   }
 }
 
-/* 1: Initialize start = 0, end = length of the array – 1
-2: mid = (start+end)/2
-3: Create a tree node with mid as root (lets call it A).
-4: Recursively do following steps:
-5: Calculate mid of left subarray and make it root of left subtree of A.
-6: Calculate mid of right subarray and make it root of right subtree of A. */
-
 let inputNodes = sortNodes([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 324]);
 let treeInstance = new Tree(inputNodes);
 prettyPrint(treeInstance.root);
-
-treeInstance.remove(treeInstance.root, 2);
+console.log(treeInstance.find(7));
 prettyPrint(treeInstance.root);
