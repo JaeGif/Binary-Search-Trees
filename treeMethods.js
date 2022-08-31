@@ -87,7 +87,25 @@ class Tree {
     }
     return root;
   }
+  levelOrder(root = this.root) {
+    let queue = [];
+    let orderedArray = [];
+    if (root === null) return null;
+    let currentNode = root;
+    queue.push(currentNode);
 
+    while (queue.length !== 0) {
+      currentNode = queue.shift();
+      orderedArray.push(currentNode.data);
+      if (currentNode.left !== null) {
+        queue.push(currentNode.left);
+      }
+      if (currentNode.right !== null) {
+        queue.push(currentNode.right);
+      }
+    }
+    return orderedArray;
+  }
   #successor(node) {
     node = node.right;
     while (node.left) {
@@ -107,5 +125,4 @@ class Tree {
 let inputNodes = sortNodes([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 324]);
 let treeInstance = new Tree(inputNodes);
 prettyPrint(treeInstance.root);
-console.log(treeInstance.find(7));
-prettyPrint(treeInstance.root);
+console.log(treeInstance.levelOrder());
