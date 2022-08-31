@@ -9,12 +9,27 @@ class Node {
 }
 
 class Tree {
+  constructor(dataArr) {
+    this.root = this.buildTree(dataArr);
+  }
+
   inorderArr = [];
   preorderArr = [];
   postorderArr = [];
 
-  constructor(dataArr) {
-    this.root = this.buildTree(dataArr);
+  #successor(node) {
+    node = node.right;
+    while (node.left) {
+      node = node.left;
+    }
+    return node.data;
+  }
+  #predecessor(node) {
+    node = node.left;
+    while (node.right) {
+      node = node.right;
+    }
+    return node.data;
   }
   buildTree(dataArr) {
     if (dataArr.length === 0) return null;
@@ -152,28 +167,35 @@ class Tree {
   height(root = this.root) {
     // height of a binary tree is NOT the number of nodes in a depth but rather the number of BRANCHES to the bottom.
     // the number of branches is equal to the number of nodes -1. Therefore the base case needs to subtract 1 from the final count
-    // of nodes. Hence return -1 rather than return null.
-    if (root === null) {
-      return -1;
-    }
-    let left = this.height(root.left);
-    let right = this.height(root.right);
-    return Math.max(left, right) + 1;
-  }
+    // of nodes, hence return -1 rather than return null.
+    if (root === null) return -1;
 
-  #successor(node) {
-    node = node.right;
-    while (node.left) {
-      node = node.left;
-    }
-    return node.data;
+    let left = this.height(root.left); // traverse leftward
+    let right = this.height(root.right); // traverse rightward
+    return Math.max(left, right) + 1; // return only the greatest value as the binary tree is not perfectly balanced.
   }
-  #predecessor(node) {
-    node = node.left;
-    while (node.right) {
-      node = node.right;
+  depth(node, root = this.root) {
+    let depth = -1; // initialize depth as -1 because the first iteration will always add 1 and the root node has a depth of 0
+    if (root === null) return -1; //
+    if (
+      root === node || // case: root node is the input node
+      (depth = this.depth(node, root.left)) >= 0 || // case: counting down left side nodes
+      (depth = this.depth(node, root.right) >= 0) // case: counting down right side nodes
+    ) {
+      return depth + 1; // add 1 to the counter
     }
-    return node.data;
+    return depth;
+  }
+  isBalanced(root = this.root) {
+    if (root === null) return -1;
+
+    let left = this.height(root.left); // traverse leftward
+    let right = this.height(root.right); // traverse rightward
+    let difference = left - right + 1;
+    if (difference <= 1) {
+      return true;
+    }
+    return false;
   }
 }
 
@@ -181,4 +203,4 @@ let inputNodes = sortNodes([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 324]);
 let treeInstance = new Tree(inputNodes);
 prettyPrint(treeInstance.root);
 
-console.log(treeInstance.height());
+console.log(treeInstance.isBalanced());
