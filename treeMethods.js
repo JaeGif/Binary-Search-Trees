@@ -89,14 +89,14 @@ class Tree {
   }
   levelOrder(root = this.root) {
     let queue = [];
-    let orderedArray = [];
+    let levelOrderArr = [];
     if (root === null) return null;
     let currentNode = root;
     queue.push(currentNode);
 
     while (queue.length !== 0) {
       currentNode = queue.shift();
-      orderedArray.push(currentNode.data);
+      levelOrderArr.push(currentNode.data);
       if (currentNode.left !== null) {
         queue.push(currentNode.left);
       }
@@ -104,8 +104,51 @@ class Tree {
         queue.push(currentNode.right);
       }
     }
-    return orderedArray;
+    return levelOrderArr;
   }
+  inorder(root = this.root) {
+    if (root === null) return; // guard clause
+
+    if (root.left !== null) {
+      this.inorder(root.left);
+    }
+    if (root.data !== undefined) {
+      this.inorderArr.push(root.data);
+    }
+    if (root.right !== null) {
+      this.inorder(root.right);
+    }
+  }
+  preorder(root = this.root) {
+    if (root === null) return;
+
+    if (root.data !== undefined) {
+      this.preorderArr.push(root.data);
+    }
+    if (root.left !== null) {
+      this.preorder(root.left);
+    }
+    if (root.right !== null) {
+      this.preorder(root.right);
+    }
+  }
+  postorder(root = this.root) {
+    if (root === null) return;
+
+    if (root.left !== null) {
+      this.postorder(root.left);
+    }
+    if (root.right !== null) {
+      this.postorder(root.right);
+    }
+    if (root.data !== undefined) {
+      this.postorderArr.push(root.data);
+    }
+  }
+  inorderArr = [];
+  preorderArr = [];
+  postorderArr = [];
+
   #successor(node) {
     node = node.right;
     while (node.left) {
@@ -125,4 +168,4 @@ class Tree {
 let inputNodes = sortNodes([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 324]);
 let treeInstance = new Tree(inputNodes);
 prettyPrint(treeInstance.root);
-console.log(treeInstance.levelOrder());
+console.log(treeInstance.inorderArr);
