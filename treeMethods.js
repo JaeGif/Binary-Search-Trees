@@ -193,14 +193,26 @@ class Tree {
     let right = this.height(root.right); // traverse rightward
     let difference = left - right + 1;
     if (difference <= 1) {
+      // tree is balanced if the difference between the subtrees is no greater than 1
       return true;
     }
     return false;
+  }
+  rebalance(root = this.root) {
+    if (this.isBalanced()) return;
+    this.inorder();
+    const inputNodes = sortNodes(this.inorderArr);
+    this.root = this.buildTree(inputNodes);
   }
 }
 
 let inputNodes = sortNodes([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 324]);
 let treeInstance = new Tree(inputNodes);
+treeInstance.insert(2);
 prettyPrint(treeInstance.root);
 
+console.log(treeInstance.isBalanced());
+console.log(treeInstance.rebalance());
+console.log(treeInstance.inorderArr);
+prettyPrint(treeInstance.root);
 console.log(treeInstance.isBalanced());
