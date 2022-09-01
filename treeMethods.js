@@ -205,14 +205,4 @@ class Tree {
     this.root = this.buildTree(inputNodes);
   }
 }
-
-let inputNodes = sortNodes([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 324]);
-let treeInstance = new Tree(inputNodes);
-treeInstance.insert(2);
-prettyPrint(treeInstance.root);
-
-console.log(treeInstance.isBalanced());
-console.log(treeInstance.rebalance());
-console.log(treeInstance.inorderArr);
-prettyPrint(treeInstance.root);
-console.log(treeInstance.isBalanced());
+export { Tree, Node };
